@@ -26,6 +26,8 @@ typedef struct stock{
     struct stock *next; 
 } stock; 
 
+int n; 
+FILE *out;  
 stock *company[100]; 
 
 stock *Stock(int company, int percent) {
@@ -46,12 +48,44 @@ void Insert(stock *mother, stock *son) {
     }
 }
 
+void output(int num) {
+    stock *p = company[num]; 
+    int i; 
+    int max = 0; 
+    int check[101] = {0}; 
+    int stoc[101] = {0}; 
+    while(p != NULL) {
+        if(p->percent >= 50) {
+            fprintf(out, "%d %d\n", num, p->company); 
+            check[p->company] = 1; 
+            if(p->company > max) {
+                max = p->company; 
+            }
+        } 
+        p = p->next; 
+    }
+    for( i = 0 ; i <= max ; i++ ) {
+        if(check[i]) {
+            p = company[i]; 
+            while(p != NULL) {
+                stoc[p->company] += p->percent; 
+                p = p->next; 
+            }
+        }
+    }
+    for( i = 0 ; i < 101 ; i++ ) {
+        if(stoc[i] >= 50){
+            fprintf(out, "%d %d\n", num, i); 
+        }
+    }
+    
+}
+
 int main(void) {
     FILE *fin = fopen("concom.in","r");
-    FILE *fout = fopen("concom.out", "w");
-    int n;
     int i; 
     int a, b, c; 
+    out = fopen("concom.out", "w");
     fscanf(fin, "%d", &n); 
     for( i = 0 ; i < n ; i++ ) {
         fscanf(fin, "%d %d %d", &a, &b, &c); 
@@ -61,6 +95,10 @@ int main(void) {
             Insert(company[a], Stock(b, c)); 
         }
     }
-    output(); 
+    for( i = 0 ; i < n ; i++ ) {
+        if(company[i] != NULL) {
+            output(i); 
+        }
+    }
     return 0;
 }
