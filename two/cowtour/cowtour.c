@@ -56,20 +56,8 @@ double maxlen(int a) {
     return max; 
 }
 
-double max(double a, double b, double c) {
-    if(a > b) {
-        if(a > c) {
-            return a; 
-        }else{
-            return c; 
-        }
-    }else{
-        if(b > c) {
-            return b; 
-        }else{
-            return c; 
-        }
-    }
+double max(double a, double b) {
+    return a > b ? a : b; 
 }
 
 int main(void) {
@@ -127,7 +115,7 @@ int main(void) {
     for( i = 0 ; i < n ; i++ ) {
         for( j = 0 ; j < n ; j++ ) {
             if(map[i][j] == 1e100) {
-                a = max(maxlen(i) + len(i, j) + maxlen(j), length[i], length[j]); 
+                a = max(maxlen(i) + len(i, j) + maxlen(j), max(length[i], length[j])); 
                 if(a < min && a != 0) {
                     min = a; 
                 }
