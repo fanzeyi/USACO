@@ -36,35 +36,28 @@ void Rect::Insert(int left, int right, int color) {
         q.pop(); 
         // 1. 不重叠
         if(right <= tmp.left || left >= tmp.right) {
-//            q.push((struct paper){left, right, color}); 
             q.push(tmp); 
             continue; 
         }
         // 2. 重叠一半..
         // 下左
         if((tmp.right <= right && tmp.right >= left) && tmp.left <= left) {
-//            q.push((struct paper){tmp.left, left, tmp.color}); 
-//            q.push((struct paper){left, right, color}); 
             q.push((struct paper){tmp.left, left, tmp.color}); 
             continue; 
         }
         // 下右
         if(tmp.left <= right && tmp.left >= left && tmp.right >= right) {
-//            q.push((struct paper){right, tmp.right, tmp.color}); 
-//            q.push((struct paper){left, right, color}); 
             q.push((struct paper){right, tmp.right, tmp.color}); 
             continue; 
         }
         // 3. 包含
         // 包含
         if(left <= tmp.left && right >= tmp.right) {
-//            q.push((struct paper){left, right, color}); 
             continue; 
         }
         // 被包含
         if(left >= tmp.left && right <= tmp.right) {
             q.push((struct paper){tmp.left, left, tmp.color}); 
-//            q.push((struct paper){left, right, color}); 
             q.push((struct paper){right, tmp.right, tmp.color}); 
             continue; 
         }
