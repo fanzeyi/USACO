@@ -78,6 +78,7 @@ int main(void) {
     fscanf(fin, "%d", &n);
     // 4096 2048 1024 512 256 128 64 32 16 8 4 2 1
     SearchSix(0, 0, 0, 0); 
+    printf("  a"); 
     fprintf(fout, "%d\n", count);
     return 0;
 }
